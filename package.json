@@ -1,15 +1,15 @@
 {
-  "name": "react-boilerplate",
-  "version": "3.2.1",
-  "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
+  "name": "Northwestern-Mutual-Mortgage-Calc",
+  "version": "0.1.0",
+  "description": "React, Redux, and Express mortgage calculator",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mxstbr/react-boilerplate.git"
+    "url": "https://github.com/mwksl/mortgage.git"
   },
   "engines": {
     "npm": ">=3"
   },
-  "author": "Max Stoiber",
+  "author": "Matthew K. Stingel",
   "license": "MIT",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
