@@ -37,13 +37,13 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
               <li>
                 <TextField
                   floatingLabelText="Property Value"
-                  hintText="$426,000"
+                  hintText="$250,000"
                 />
               </li>
               <li>
                 <TextField
                   floatingLabelText="Down Payment"
-                  hintText="$83,000"
+                  hintText="$40,000 or 16%"
                 />
               </li>
               <Subheader>{`Loan Period: ${this.props.loanPeriod} years`}</Subheader>
@@ -62,6 +62,18 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
                   defaultValue="Default Value"
                 />
               </li>
+              <li>
+                <TextField
+                  floatingLabelText="Property Tax"
+                  hintText="$6,400 or 2.56%"
+                />
+              </li>
+              <li>
+                <TextField
+                  floatingLabelText="Private Mortgage Insurance"
+                  hintText="$2500"
+                />
+              </li>
             </ul>
           </form>
         </MuiThemeProvider>
@@ -75,7 +87,7 @@ MortgageForm.propTypes = {
   loanPeriod: React.PropTypes.number,
 };
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     onChangeLoanPeriod: (evt, value) => {
       dispatch(changeLoanPeriodValue(value));
