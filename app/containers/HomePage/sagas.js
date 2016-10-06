@@ -2,7 +2,7 @@
  * Gets the default mortgage rates from the Zillow API
  */
 
-import ZillowId from '../../secrets';
+import ZillowId from 'utils/secrets';
 
 import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
 import { selectLoanPeriod } from 'containers/HomePage/selectors';
