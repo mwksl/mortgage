@@ -2,30 +2,30 @@
  * Gets the default mortgage rates from the Zillow API
  */
 
-import ZillowId from 'utils/secrets';
+import { secretKeys } from '../../secrets';
 
-import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
-import { selectLoanPeriod } from 'containers/HomePage/selectors';
+import { take, fork, call, put, cancel } from 'redux-saga/effects';
+// import { selectLoanPeriod } from 'containers/HomePage/selectors';
 import request from 'utils/request';
 
-import { ratesLoaded, rateLoadedError } from './actions';
+import { ratesLoaded, ratesLoadedError } from './actions';
 import { LOAD_APR_RATE_REQUEST } from './constants';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
 /* Zillow response handler */
 export function* getRates() {
   // Get national average rates
-  const loanPeriod = yield select(selectLoanPeriod());
-  const ZWSID = ZillowId;
-  const requestURL = `http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
+  const ZWSID = secretKeys.zillowID;
+  // Use cors.io to prevent a CORS error while testing
+  const requestURL = `http://cors.io/?http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
 
   // Call our request helper (see 'utils/request')
   const rates = yield call(request, requestURL);
 
   if (!rates.err) {
-    yield put(ratesLoaded(rates.data, loanPeriod));
+    yield put(ratesLoaded(rates.data.response));
   } else {
-    yield put(rateLoadedError(rates.err));
+    yield put(ratesLoadedError(rates.err));
   }
 }
 
@@ -49,3 +49,7 @@ export function* zillowData() {
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);
 }
+
+export default[
+  zillowData,
+];

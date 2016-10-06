@@ -3,92 +3,87 @@
  */
 
 import expect from 'expect';
-import { take, call, put, select, fork, cancel } from 'redux-saga/effects';
+import { take, call, put, fork, cancel } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
-import { ZillowId } from '../../../secrets';
+import { secretKeys } from '../../../secrets';
 
-import { getRepos, getReposWatcher, githubData } from '../sagas';
+import { getRates, getRatesWatcher, zillowData } from '../sagas';
 
 import { LOAD_APR_RATE_REQUEST } from '../constants';
-import { loadRates, ratesLoaded, ratesLoadedError } from '../actions';
+import { ratesLoaded, ratesLoadedError } from '../actions';
 
 import request from 'utils/request';
-import { selectLoanPeriod } from 'containers/HomePage/selectors';
 
-const ZWSID = ZillowId;
+const ZWSID = secretKeys.zillowID;
 
-describe('getRepos Saga', () => {
+describe('getRates Saga', () => {
   let getRatesGenerator;
 
   // We have to test twice, once for a successful load and once for an unsuccessful one
   // so we do all the stuff that happens beforehand automatically in the beforeEach
   beforeEach(() => {
-    getRatesGenerator = loadRates();
+    getRatesGenerator = getRates();
 
-    const selectDescriptor = getRatesGenerator.next().value;
-    expect(selectDescriptor).toEqual(select(selectLoanPeriod()));
-
-    const requestURL = `http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
-    const callDescriptor = getRatesGenerator.next(username).value;
+    const requestURL = `http://cors.io/?http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
+    const callDescriptor = getRatesGenerator.next().value;
     expect(callDescriptor).toEqual(call(request, requestURL));
   });
 
-  it('should dispatch the reposLoaded action if it requests the data successfully', () => {
+  it('should dispatch the ratesLoaded action if it makes a successful request', () => {
     const response = {
       data: [{
-        name: 'First repo',
-      }, {
-        name: 'Second repo',
+        response: {},
       }],
     };
-    const putDescriptor = getReposGenerator.next(response).value;
-    expect(putDescriptor).toEqual(put(reposLoaded(response.data, username)));
+    const putDescriptor = getRatesGenerator.next(response).value;
+    expect(putDescriptor).toEqual(put(ratesLoaded(response.data.response)));
   });
 
-  it('should call the repoLoadingError action if the response errors', () => {
+  it('should call the rateLoadingError action if it makes an unsuccessful request', () => {
     const response = {
-      err: 'Some error',
+      err: 'An error',
     };
-    const putDescriptor = getReposGenerator.next(response).value;
-    expect(putDescriptor).toEqual(put(repoLoadingError(response.err)));
+    const putDescriptor = getRatesGenerator.next(response).value;
+    expect(putDescriptor).toEqual(put(ratesLoadedError(response.err)));
+  });
+
+  describe('getRatesWatcher Saga', () => {
+    const getRatesWatcherGenerator = getRatesWatcher();
+
+    it('should watch for LOAD_APR_RATE_REQUEST actions', () => {
+      const takeDescriptor = getRatesWatcherGenerator.next().value;
+      expect(takeDescriptor).toEqual(take(LOAD_APR_RATE_REQUEST));
+    });
+
+    it('should invoke getRates sage on receiving the actions', () => {
+      const callDescriptor = getRatesWatcherGenerator.next(put(LOAD_APR_RATE_REQUEST)).value;
+      expect(callDescriptor).toEqual(call(getRates));
+    });
+  });
+
+  describe('zillowData Saga', () => {
+    const zillowDataSaga = zillowData();
+
+    let forkDescriptor;
+
+    it('should asynch fork the getRatesWatcher saga', () => {
+      forkDescriptor = zillowDataSaga.next();
+      expect(forkDescriptor.value).toEqual(fork(getRatesWatcher));
+    });
+
+    it('should yiel until LOCATION_CHANGE action call', () => {
+      const takeDescriptor = zillowDataSaga.next();
+      expect(takeDescriptor.value).toEqual(take(LOCATION_CHANGE));
+    });
+
+    it('should finally cancel() the forked saga',
+      function* zillowDataSagaCancel() {
+        // reuse the open fork
+        forkDescriptor = zillowDataSaga.next(put(LOCATION_CHANGE));
+        expect(forkDescriptor.value).toEqual(cancel(forkDescriptor));
+      }
+    );
   });
 });
 
-describe('getReposWatcher Saga', () => {
-  const getReposWatcherGenerator = getReposWatcher();
-
-  it('should watch for LOAD_REPOS action', () => {
-    const takeDescriptor = getReposWatcherGenerator.next().value;
-    expect(takeDescriptor).toEqual(take(LOAD_REPOS));
-  });
-
-  it('should invoke getRepos saga on actions', () => {
-    const callDescriptor = getReposWatcherGenerator.next(put(LOAD_REPOS)).value;
-    expect(callDescriptor).toEqual(call(getRepos));
-  });
-});
-
-describe('githubDataSaga Saga', () => {
-  const githubDataSaga = githubData();
-
-  let forkDescriptor;
-
-  it('should asyncronously fork getReposWatcher saga', () => {
-    forkDescriptor = githubDataSaga.next();
-    expect(forkDescriptor.value).toEqual(fork(getReposWatcher));
-  });
-
-  it('should yield until LOCATION_CHANGE action', () => {
-    const takeDescriptor = githubDataSaga.next();
-    expect(takeDescriptor.value).toEqual(take(LOCATION_CHANGE));
-  });
-
-  it('should finally cancel() the forked getReposWatcher saga',
-    function* githubDataSagaCancellable() {
-      // reuse open fork for more integrated approach
-      forkDescriptor = githubDataSaga.next(put(LOCATION_CHANGE));
-      expect(forkDescriptor.value).toEqual(cancel(forkDescriptor));
-    }
-  );
-});

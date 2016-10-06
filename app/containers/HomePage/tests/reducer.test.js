@@ -9,7 +9,13 @@ describe('homeReducer', () => {
   let state;
   beforeEach(() => {
     state = fromJS({
+      loading: false,
+      error: false,
       loanPeriod: 10,
+      propertyValue: 0,
+      APRData: fromJS({
+        rates: false,
+      }),
     });
   });
 

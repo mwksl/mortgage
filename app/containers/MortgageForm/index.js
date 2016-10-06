@@ -12,12 +12,14 @@ import { createStructuredSelector } from 'reselect';
 
 /* HomePage actions */
 import {
+  changePropertyValue,
   changeLoanPeriodValue,
 } from 'containers/HomePage/actions';
 
 /* HomePage selectors */
 import {
   selectLoanPeriod,
+  selectPropertyValue,
 } from 'containers/HomePage/selectors';
 
 import {
@@ -38,7 +40,9 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
                 <TextField
                   floatingLabelText="Property Value"
                   hintText="$250,000"
+                  onChange={this.props.onChangePropertyValue}
                 />
+                <p>{this.props.propertyValue}</p>
               </li>
               <li>
                 <TextField
@@ -83,15 +87,16 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
 }
 
 MortgageForm.propTypes = {
+  onChangePropertyValue: React.PropTypes.func,
   onChangeLoanPeriod: React.PropTypes.func,
   loanPeriod: React.PropTypes.number,
+  propertyValue: React.PropTypes.number,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangeLoanPeriod: (evt, value) => {
-      dispatch(changeLoanPeriodValue(value));
-    },
+    onChangePropertyValue: (evt) => dispatch(changePropertyValue(evt.target.value)),
+    onChangeLoanPeriod: (evt, value) => dispatch(changeLoanPeriodValue(value)),
 
     dispatch,
   };
@@ -99,6 +104,7 @@ export function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   loanPeriod: selectLoanPeriod(),
+  propertyValue: selectPropertyValue(),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MortgageForm);

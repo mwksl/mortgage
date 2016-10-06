@@ -5,6 +5,7 @@
 
 import {
   ADJUST_LOAN_PERIOD_SLIDER,
+  ADJUST_PROPERTY_VALUE,
   LOAD_APR_RATE_REQUEST,
   LOAD_APR_RATE_SUCCESS,
   LOAD_APR_RATE_FAILURE,
@@ -21,6 +22,19 @@ export function changeLoanPeriodValue(loanPeriod) {
   return {
     type: ADJUST_LOAN_PERIOD_SLIDER,
     loanPeriod,
+  };
+}
+/**
+ * Change, and update the value of the property
+ * @param {integer} loanPeriod  The appraised value of the property entered
+ *
+ * @return {object}             An action object with a type of ADJUST_LOAN_PERIOD_SLIDER
+ *                              passing the loan period
+ */
+export function changePropertyValue(propertyValue) {
+  return {
+    type: ADJUST_PROPERTY_VALUE,
+    propertyValue,
   };
 }
 
@@ -45,11 +59,10 @@ export function loadRates() {
  *                          LOAD_APR_RATE_SUCCESS passing
  *                          the loan rates
  */
-export function ratesLoaded(rates, loanPeriod) {
+export function ratesLoaded(rates) {
   return {
     type: LOAD_APR_RATE_SUCCESS,
     rates,
-    loanPeriod,
   };
 }
 

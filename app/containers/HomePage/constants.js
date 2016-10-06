@@ -1,3 +1,4 @@
+export const ADJUST_PROPERTY_VALUE = 'app/HomePage/ADJUST_PROPERTY_VALUE';
 export const ADJUST_LOAN_PERIOD_SLIDER = 'app/Homepage/ADJUST_LOAN_PERIOD_SLIDER';
 
 export const LOAD_APR_RATE_REQUEST = 'app/HomePage/LOAD_APR_RATE_REQUEST';

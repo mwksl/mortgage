@@ -35,17 +35,15 @@ describe('Home Actions', () => {
       expect(loadRates()).toEqual(expectedResult);
     });
   });
-  describe('reatesLoadedSuccess', () => {
+  describe('ratesLoadedSuccess', () => {
     it('should return the correct type and the passed rates', () => {
       const fixture = ['Test'];
-      const loanPeriod = 10;
       const expectedResult = {
         type: LOAD_APR_RATE_SUCCESS,
         rates: fixture,
-        loanPeriod,
       };
 
-      expect(ratesLoaded(fixture, loanPeriod)).toEqual(expectedResult);
+      expect(ratesLoaded(fixture)).toEqual(expectedResult);
     });
   });
   describe('reatesLoadedError', () => {

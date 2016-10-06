@@ -2,14 +2,39 @@ import expect from 'expect';
 import { shallow } from 'enzyme';
 import React from 'react';
 
-import HomePage from '../index';
+import { Provider } from 'react-redux';
+
+import { HomePage, mapDispatchToProps } from '../index';
+import { loadRates } from '../actions';
+
 import MortgageForm from 'containers/MortgageForm';
 
 describe('<HomePage />', () => {
-  it('should render the MortgageForm', () => {
+  it('should render the container div', () => {
     const renderedComponent = shallow(
-      <HomePage />
+      <Provider>
+        <HomePage>
+          <MortgageForm />
+        </HomePage>
+      </Provider>
     );
     expect(renderedComponent.contains(<MortgageForm />)).toEqual(true);
+  });
+
+  describe('mapDispatchToProps', () => {
+    describe('onLoadRates', () => {
+      it('should be injected', () => {
+        const dispatch = expect.createSpy();
+        const result = mapDispatchToProps(dispatch);
+        expect(result.onLoadRates).toExist();
+      });
+
+      it('should dispatch loadRates when called', () => {
+        const dispatch = expect.createSpy();
+        const result = mapDispatchToProps(dispatch);
+        result.onLoadRates();
+        expect(dispatch).toHaveBeenCalledWith(loadRates());
+      });
+    });
   });
 });
