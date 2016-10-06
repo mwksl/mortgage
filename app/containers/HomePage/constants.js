@@ -1,1 +1,5 @@
 export const ADJUST_LOAN_PERIOD_SLIDER = 'app/Homepage/ADJUST_LOAN_PERIOD_SLIDER';
+
+export const LOAD_APR_RATE_REQUEST = 'app/HomePage/LOAD_APR_RATE_REQUEST';
+export const LOAD_APR_RATE_SUCCESS = 'app/HomePage/LOAD_APR_RATE_SUCCESS';
+export const LOAD_APR_RATE_FAILURE = 'app/Homepage/LOAD_APR_RATE_FAILURE';

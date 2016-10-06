@@ -4,6 +4,9 @@ build
 node_modules
 stats.json
 
+# API Access
+secrets.js
+
 # Cruft
 .DS_Store
 npm-debug.log
