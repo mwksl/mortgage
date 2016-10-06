@@ -1,15 +1,15 @@
 import expect from 'expect';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import React from 'react';
 
-import { HomePage, mapDispatchToProps } from '../index';
+import HomePage from '../index';
 import MortgageForm from 'containers/MortgageForm';
 
 describe('<HomePage />', () => {
-  it('should render the loading indicator when it\'s loading', () => {
+  it('should render the MortgageForm', () => {
     const renderedComponent = shallow(
-      <HomePage loading />
+      <HomePage />
     );
-    expect(renderedComponent.contains(MortgageForm)).toEqual(true);
+    expect(renderedComponent.contains(<MortgageForm />)).toEqual(true);
   });
 });

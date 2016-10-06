@@ -1,0 +1,1 @@
+export const ADJUST_LOAN_PERIOD_SLIDER = 'app/Homepage/ADJUST_LOAN_PERIOD_SLIDER';

@@ -8,20 +8,30 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import styles from './styles.css';
+import Helmet from 'react-helmet';
 
 import MortgageForm from 'containers/MortgageForm';
+
+import styles from './styles.css';
 
 export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   render() {
     return (
-      <div className={styles.container}>
-        <h1>
-          <FormattedMessage {...messages.header} />
-        </h1>
-        <MortgageForm />
-      </div>
+      <article>
+        <Helmet
+          title="Mortgage Calculator Home"
+          meta={[
+            { name: 'description', content: 'A React.js and Redux application for calculating mortgages' },
+          ]}
+        />
+        <div className={styles.container}>
+          <h1>
+            <FormattedMessage {...messages.header} />
+          </h1>
+          <MortgageForm />
+        </div>
+      </article>
     );
   }
 }
