@@ -7,7 +7,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 
 import { MortgageForm, mapDispatchToProps } from '../index';
-import { changeLoanPeriodValue } from '../../HomePage/actions';
+import { changeLoanPeriodValue, changePropertyValue } from '../../HomePage/actions';
 
 describe('<MortgageForm />', () => {
   it('Should render 6 inputs for the calculator as a list', () => {
@@ -31,6 +31,22 @@ describe('<MortgageForm />', () => {
         const loanPeriod = 20;
         result.onChangeLoanPeriod(event, loanPeriod);
         expect(dispatch).toHaveBeenCalledWith(changeLoanPeriodValue(loanPeriod));
+      });
+    });
+
+    describe('onChangePropertyValue', () => {
+      it('should be injected', () => {
+        const dispatch = expect.createSpy();
+        const result = mapDispatchToProps(dispatch);
+        expect(result.onChangePropertyValue).toExist();
+      });
+
+      it('should dispatch changePropertValue when called', () => {
+        const dispatch = expect.createSpy();
+        const result = mapDispatchToProps(dispatch);
+        const propertyValue = 2500;
+        result.onChangePropertyValue({ target: { value: propertyValue } });
+        expect(dispatch).toHaveBeenCalledWith(changePropertyValue(propertyValue));
       });
     });
   });

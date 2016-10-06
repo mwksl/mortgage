@@ -7,8 +7,6 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import { createStructuredSelector } from 'reselect';
 
 import Helmet from 'react-helmet';
@@ -40,10 +38,9 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
           ]}
         />
         <div className={styles.container}>
-          <h1>
-            <FormattedMessage {...messages.header} />
-          </h1>
-          <MortgageForm />
+          <MortgageForm
+            averageRate={this.props.rates.today.fifteenYearFixed}
+          />
         </div>
       </article>
     );

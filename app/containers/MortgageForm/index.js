@@ -25,7 +25,6 @@ import {
 import {
   MuiThemeProvider,
   TextField,
-  Subheader,
   Slider,
 } from 'material-ui';
 
@@ -50,7 +49,7 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
                   hintText="$40,000 or 16%"
                 />
               </li>
-              <Subheader>{`Loan Period: ${this.props.loanPeriod} years`}</Subheader>
+              <p>{`Loan Period: ${this.props.loanPeriod} years`}</p>
               <li>
                 <Slider
                   min={10}
@@ -63,7 +62,7 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
               <li>
                 <TextField
                   floatingLabelText="APR"
-                  defaultValue="Default Value"
+                  defaultValue={this.props.averageRate}
                 />
               </li>
               <li>
@@ -87,6 +86,7 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
 }
 
 MortgageForm.propTypes = {
+  averageRate: React.PropTypes.number,
   onChangePropertyValue: React.PropTypes.func,
   onChangeLoanPeriod: React.PropTypes.func,
   loanPeriod: React.PropTypes.number,
