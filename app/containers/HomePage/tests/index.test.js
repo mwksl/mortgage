@@ -2,21 +2,15 @@ import expect from 'expect';
 import { shallow } from 'enzyme';
 import React from 'react';
 
-import { Provider } from 'react-redux';
-
 import { HomePage, mapDispatchToProps } from '../index';
 import { loadRates } from '../actions';
 
 import MortgageForm from 'containers/MortgageForm';
 
 describe('<HomePage />', () => {
-  it('should render the container div', () => {
+  it('should render <MortgageForm />', () => {
     const renderedComponent = shallow(
-      <Provider>
-        <HomePage>
-          <MortgageForm />
-        </HomePage>
-      </Provider>
+      <HomePage />
     );
     expect(renderedComponent.contains(<MortgageForm />)).toEqual(true);
   });

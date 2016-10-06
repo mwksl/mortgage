@@ -46,7 +46,7 @@ describe('Home Actions', () => {
       expect(ratesLoaded(fixture)).toEqual(expectedResult);
     });
   });
-  describe('reatesLoadedError', () => {
+  describe('ratesLoadedError', () => {
     it('should return the correct type and the error', () => {
       const fixture = {
         msg: 'Something went wrong!',

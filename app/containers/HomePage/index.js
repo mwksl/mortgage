@@ -21,7 +21,7 @@ import MortgageForm from 'containers/MortgageForm';
 
 import styles from './styles.css';
 
-class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   /**
    * Initial loading of mortgage rates from Zillow
    */
