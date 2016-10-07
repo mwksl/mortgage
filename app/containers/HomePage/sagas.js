@@ -16,8 +16,8 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 export function* getRates() {
   // Get national average rates
   const ZWSID = secretKeys.zillowID;
-  // Use cors.io to prevent a CORS error while testing
-  const requestURL = `http://cors.io/?http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
+  // Use crossorigin.me to prevent a CORS error while testing
+  const requestURL = `https://crossorigin.me/http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
 
   // Call our request helper (see 'utils/request')
   const rates = yield call(request, requestURL);

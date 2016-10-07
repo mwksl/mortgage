@@ -13,9 +13,12 @@ import Helmet from 'react-helmet';
 
 import {
   selectRates,
-  selectLoanPeriod,
   selectPropertyValue,
-  selectDownPaymentValue,
+  selectLoanPeriod,
+  selectPrincipal,
+  selectAPR,
+  selectTaxRate,
+  selectInsurance,
 } from './selectors';
 
 import { loadRates } from './actions';
@@ -33,7 +36,9 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
     this.props.onLoadRates();
   }
 
+
   render() {
+    const rates = this.props.rates.today === undefined ? 3.25 : this.props.rates.today.fifteenYearFixed;
     return (
       <article>
         <Helmet
@@ -45,15 +50,17 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
         <div className={styles.flexBox}>
           <div className={styles.formContainer}>
             <MortgageForm
-              averageRate={this.props.rates.today.fifteenYearFixed}
+              averageRate={Number(rates)}
             />
           </div>
           <div className={styles.calculatorContainer}>
             <Calculator
               propertyValue={this.props.propertyValue}
-              downPayment={this.props.downPaymentValue}
+              principal={this.props.principal}
               loanPeriod={this.props.loanPeriod}
-              APR={this.props.rates.today.fifteenYearFixed}
+              APR={this.props.apr ? this.props.apr : rates}
+              taxRate={this.props.taxRate}
+              insuranceAmt={this.props.insuranceAmt}
             />
           </div>
         </div>
@@ -65,8 +72,11 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
 HomePage.propTypes = {
   onLoadRates: React.PropTypes.func,
   propertyValue: React.PropTypes.number,
-  downPaymentValue: React.PropTypes.number,
+  principal: React.PropTypes.number,
   loanPeriod: React.PropTypes.number,
+  apr: React.PropTypes.number,
+  insuranceAmt: React.PropTypes.number,
+  taxRate: React.PropTypes.number,
   rates: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.bool,
@@ -82,9 +92,12 @@ export function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   rates: selectRates(),
-  loanPeriod: selectLoanPeriod(),
   propertyValue: selectPropertyValue(),
-  downPaymentValue: selectDownPaymentValue(),
+  loanPeriod: selectLoanPeriod(),
+  principal: selectPrincipal(),
+  apr: selectAPR(),
+  insuranceAmt: selectInsurance(),
+  taxRate: selectTaxRate(),
 });
 
 // Wrap the component to inject dispatch and state into it

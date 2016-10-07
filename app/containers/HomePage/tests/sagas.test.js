@@ -25,7 +25,7 @@ describe('getRates Saga', () => {
   beforeEach(() => {
     getRatesGenerator = getRates();
 
-    const requestURL = `http://cors.io/?http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
+    const requestURL = `https://crossorigin.me/http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
     const callDescriptor = getRatesGenerator.next().value;
     expect(callDescriptor).toEqual(call(request, requestURL));
   });

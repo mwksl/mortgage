@@ -11,7 +11,7 @@ To run a development server, simply type `npm i` followed by `npm run start`.
 
 M is Monthly Payment, P is principal, r is monthly interest rate, n is number of payments
 
-`M = P * ((r * ((1+r)^n))/(((1 + r)^n) - 1))`
+`M = P * ((r * ((1 + r)^n))/(((1 + r)^n) - 1))`
 
 Curious about those tests?
 ==========================
