@@ -1,7 +1,39 @@
-.container {
+.flexBox {
   display: flex;
-  justify-content: center;
+  width: 100%;
   align-items: center;
-  flex-direction: column;
+  justify-content: center;
 }
 
+.formContainer {
+  order: 1;
+  flex: 1;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  flex-basis: auto;
+  padding: 0.5rem;
+}
+
+.calculatorContainer {
+  order: 1;
+  flex: 1;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  flex-basis: auto;
+  padding: 0.5rem;
+}
+
+/* mobile layout */
+@media (max-width: 480px) {
+  .container {
+    display: -webkit-box, -moz-box, -ms-flexbox, -webkit-flex, flex;
+    width: 100%;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-flex-orient: vertical;
+    -webkit-orient: vertical;
+    flex-direction: vertical;
+  }
+}

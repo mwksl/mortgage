@@ -21,9 +21,15 @@ const selectPropertyValue = () => createSelector(
   (homeState) => homeState.get('propertyValue')
 );
 
+const selectDownPaymentValue = () => createSelector(
+  selectHome(),
+  (homeState) => homeState.get('downPayment')
+);
+
 export {
   selectHome,
   selectRates,
   selectPropertyValue,
   selectLoanPeriod,
+  selectDownPaymentValue,
 };

@@ -5,6 +5,7 @@
 
 import {
   ADJUST_LOAN_PERIOD_SLIDER,
+  ADJUST_DOWN_PAYMENT_VALUE,
   ADJUST_PROPERTY_VALUE,
   LOAD_APR_RATE_REQUEST,
   LOAD_APR_RATE_SUCCESS,
@@ -24,12 +25,27 @@ export function changeLoanPeriodValue(loanPeriod) {
     loanPeriod,
   };
 }
+
+/**
+ * Change, and update the value of the loan period
+ * @param {number} downPayment  The down payment on the property
+ *
+ * @return {object}             An action object with a type of ADJUST_DOWN_PAYMENT_VALUE
+ *                              passing the loan period
+ */
+export function changeDownPaymentValue(downPayment) {
+  return {
+    type: ADJUST_DOWN_PAYMENT_VALUE,
+    downPayment,
+  };
+}
+
 /**
  * Change, and update the value of the property
- * @param {integer} loanPeriod  The appraised value of the property entered
+ * @param {integer} propertyValue   The appraised value of the property entered
  *
- * @return {object}             An action object with a type of ADJUST_LOAN_PERIOD_SLIDER
- *                              passing the loan period
+ * @return {object}                 An action object with a type of ADJUST_LOAN_PERIOD_SLIDER
+ *                                  passing the loan period
  */
 export function changePropertyValue(propertyValue) {
   return {

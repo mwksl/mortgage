@@ -5,6 +5,7 @@
 
 import {
   ADJUST_LOAN_PERIOD_SLIDER,
+  ADJUST_DOWN_PAYMENT_VALUE,
   ADJUST_PROPERTY_VALUE,
   LOAD_APR_RATE_REQUEST,
   LOAD_APR_RATE_SUCCESS,
@@ -18,6 +19,7 @@ const initialState = fromJS({
   error: false,
   loanPeriod: 10,
   propertyValue: 0,
+  downPayment: 0,
   APRData: fromJS({
     rates: false,
   }),
@@ -44,6 +46,9 @@ function appReducer(state = initialState, action) {
     case ADJUST_PROPERTY_VALUE:
       return state
         .set('propertyValue', action.propertyValue);
+    case ADJUST_DOWN_PAYMENT_VALUE:
+      return state
+        .set('downPayment', action.downPayment);
     default:
       return state;
   }

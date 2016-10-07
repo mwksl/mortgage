@@ -14,12 +14,12 @@ import { createStructuredSelector } from 'reselect';
 import {
   changePropertyValue,
   changeLoanPeriodValue,
+  changeDownPaymentValue,
 } from 'containers/HomePage/actions';
 
 /* HomePage selectors */
 import {
   selectLoanPeriod,
-  selectPropertyValue,
 } from 'containers/HomePage/selectors';
 
 import {
@@ -41,12 +41,12 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
                   hintText="$250,000"
                   onChange={this.props.onChangePropertyValue}
                 />
-                <p>{this.props.propertyValue}</p>
               </li>
               <li>
                 <TextField
                   floatingLabelText="Down Payment"
                   hintText="$40,000 or 16%"
+                  onChange={this.props.onChangeDownPayment}
                 />
               </li>
               <p>{`Loan Period: ${this.props.loanPeriod} years`}</p>
@@ -57,6 +57,7 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
                   step={10}
                   onChange={this.props.onChangeLoanPeriod}
                   value={this.props.loanPeriod}
+                  style={{ padding: '0 10%' }}
                 />
               </li>
               <li>
@@ -89,14 +90,15 @@ MortgageForm.propTypes = {
   averageRate: React.PropTypes.number,
   onChangePropertyValue: React.PropTypes.func,
   onChangeLoanPeriod: React.PropTypes.func,
+  onChangeDownPayment: React.PropTypes.func,
   loanPeriod: React.PropTypes.number,
-  propertyValue: React.PropTypes.number,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onChangePropertyValue: (evt) => dispatch(changePropertyValue(evt.target.value)),
     onChangeLoanPeriod: (evt, value) => dispatch(changeLoanPeriodValue(value)),
+    onChangeDownPayment: (evt) => dispatch(changeDownPaymentValue(evt.target.value)),
 
     dispatch,
   };
@@ -104,7 +106,6 @@ export function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   loanPeriod: selectLoanPeriod(),
-  propertyValue: selectPropertyValue(),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MortgageForm);

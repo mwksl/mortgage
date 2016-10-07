@@ -7,6 +7,12 @@ The world's best Mortgage Calculator -- guaranteed. Created with React, Redux, a
 
 To run a development server, simply type `npm i` followed by `npm run start`.
 
+# Mortgage Equation
+
+M is Monthly Payment, P is principal, r is monthly interest rate, n is number of payments
+
+`M = P * ((r * ((1+r)^n))/(((1 + r)^n) - 1))`
+
 Curious about those tests?
 ==========================
 `npm run test` will run through them in the console.
