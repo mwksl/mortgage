@@ -44,14 +44,14 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
               <li>
                 <TextField
                   floatingLabelText="Property Value"
-                  hintText="$250,000"
+                  hintText="e.g. $250,000"
                   onChange={(evt) => this.props.onChangePropertyValue(evt, this.props.downPayment)}
                 />
               </li>
               <li>
                 <TextField
                   floatingLabelText="Down Payment"
-                  hintText="$40,000 or 16%"
+                  hintText="e.g. $50,000 or 20%"
                   onChange={(evt) => this.props.onChangeDownPayment(evt, this.props.propertyValue)}
                 />
               </li>
@@ -77,14 +77,14 @@ export class MortgageForm extends React.Component { // eslint-disable-line react
               <li>
                 <TextField
                   floatingLabelText="Property Tax"
-                  hintText="$6,400 or 2.56%"
+                  hintText="e.g. $6,400 or 2.56%"
                   onChange={this.props.onChangeTax}
                 />
               </li>
               <li>
                 <TextField
                   floatingLabelText="Private Mortgage Insurance"
-                  hintText="$2500"
+                  hintText="e.g. $2500"
                   onChange={this.props.onChangeInsurance}
                 />
               </li>
@@ -105,7 +105,10 @@ MortgageForm.propTypes = {
   onChangeTax: React.PropTypes.func,
   onChangeInsurance: React.PropTypes.func,
   loanPeriod: React.PropTypes.number,
-  propertyValue: React.PropTypes.number,
+  propertyValue: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number,
+  ]),
   downPayment: React.PropTypes.number,
 };
 
@@ -122,7 +125,7 @@ export function mapDispatchToProps(dispatch) {
       // If user enters a percentage sign
       if (downPayment.match(/%$/) || downPayment < 100) {
         const downPaymentCleaned = downPayment.replace(/%$/, '');
-        downPayment = propertyValue * (downPaymentCleaned / 100);
+        downPayment = propertyValue * (downPaymentCleaned / 1200);
       // If a percentage is entered as a decimal
       } else if (downPayment < 1) {
         downPayment *= propertyValue;
@@ -141,7 +144,6 @@ export function mapDispatchToProps(dispatch) {
       } else if (taxRate < 10) { // Highest median tax rate is 2.7%, be realistic
         taxRate /= 1200;
       }
-      console.log(taxRate);
       dispatch(updateTaxRate(taxRate));
     },
     onChangeInsurance: (evt) => dispatch(changeInsurance(evt.target.value)),

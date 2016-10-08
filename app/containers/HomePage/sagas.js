@@ -19,7 +19,10 @@ export function* getRates() {
   const requestURL = `http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
 
   // Call our request helper (see 'utils/request')
-  const rates = yield call(request, requestURL);
+  const rates = yield call(request, requestURL, {
+    method: 'GET',
+    mode: 'no-cors',
+  });
   if (!rates.err) {
     yield put(ratesLoaded(rates.data.response));
   } else {

@@ -47,6 +47,39 @@ export class Calculator extends React.Component { // eslint-disable-line react/p
     this.props.onUpdateCalculator(monthly, yearly, taxes, insurance);
   }
   render() {
+    let chart = (
+      <VictoryPie
+        data={[
+          { x: 'Principal', y: this.props.monthlyPrincipal },
+          { x: 'Taxes', y: this.props.taxes },
+        ]}
+        labelRadius={this.props.taxRate ? 80 : null}
+        style={{
+          labels: {
+            fontSize: 20,
+            fill: 'white',
+          },
+        }}
+      />
+    );
+    if (this.props.insuranceAmt > 0) {
+      chart = (
+        <VictoryPie
+          data={[
+            { x: 'Principal', y: this.props.monthlyPrincipal },
+            { x: 'Taxes', y: this.props.taxes },
+            { x: 'Insurance', y: this.props.insuranceAmt },
+          ]}
+          labelRadius={this.props.taxRate ? 80 : null}
+          style={{
+            labels: {
+              fontSize: 20,
+              fill: 'white',
+            },
+          }}
+        />
+      );
+    }
     return (
       <div className={styles.calculator}>
         <MuiThemeProvider>
@@ -55,20 +88,7 @@ export class Calculator extends React.Component { // eslint-disable-line react/p
               <Subheader>Yearly Payment: ${this.props.yearlyRate}</Subheader>
               <h3>Monthly Payment: ${this.props.monthlyRate}</h3>
               <div className={styles.pieContainer} >
-                <VictoryPie
-                  data={[
-                    { x: 'Principal', y: this.props.monthlyPrincipal },
-                    { x: 'Taxes', y: this.props.taxes },
-                    { x: 'Insurance', y: this.props.insuranceAmt },
-                  ]}
-                  labelRadius={this.props.taxRate ? 80 : null}
-                  style={{
-                    labels: {
-                      fontSize: 20,
-                      fill: 'white',
-                    },
-                  }}
-                />
+                {chart}
               </div>
               <Subheader>Your Monthly Breakdown</Subheader>
               <p>Principal/Interest: ${this.props.monthlyPrincipal}</p>
@@ -83,8 +103,14 @@ export class Calculator extends React.Component { // eslint-disable-line react/p
 }
 
 Calculator.propTypes = {
-  propertyValue: React.PropTypes.number,
-  taxRate: React.PropTypes.number,
+  propertyValue: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number,
+  ]),
+  taxRate: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number,
+  ]),
   principal: React.PropTypes.number,
   loanPeriod: React.PropTypes.number,
   onUpdateCalculator: React.PropTypes.func,

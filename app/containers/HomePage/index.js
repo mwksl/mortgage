@@ -75,12 +75,18 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
 
 HomePage.propTypes = {
   onLoadRates: React.PropTypes.func,
-  propertyValue: React.PropTypes.number,
+  propertyValue: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number,
+  ]),
   principal: React.PropTypes.number,
   loanPeriod: React.PropTypes.number,
   apr: React.PropTypes.number,
   insuranceAmt: React.PropTypes.number,
-  taxRate: React.PropTypes.number,
+  taxRate: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number,
+  ]),
   rates: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.bool,

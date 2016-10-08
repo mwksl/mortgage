@@ -27,7 +27,10 @@ describe('getRates Saga', () => {
 
     const requestURL = `http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
     const callDescriptor = getRatesGenerator.next().value;
-    expect(callDescriptor).toEqual(call(request, requestURL));
+    expect(callDescriptor).toEqual(call(request, requestURL, {
+      method: 'GET',
+      mode: 'no-cors',
+    }));
   });
 
   it('should dispatch the ratesLoaded action if it makes a successful request', () => {
