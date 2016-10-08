@@ -135,11 +135,13 @@ export function mapDispatchToProps(dispatch) {
     },
     onChangeAPR: (evt) => dispatch(changeAPR(evt.target.value)),
     onChangeTax: (evt) => {
-      let taxRate = evt.target.value.replace(/[^0-9.-]+/g, '') / 12;
-      if (taxRate < 100) {
-        taxRate /= 100;
+      let taxRate = evt.target.value.replace(/[^0-9.-]+/g, '');
+      if (taxRate > 100) {
+        taxRate /= 12;
+      } else if (taxRate < 10) { // Highest median tax rate is 2.7%, be realistic
+        taxRate /= 1200;
       }
-
+      console.log(taxRate);
       dispatch(updateTaxRate(taxRate));
     },
     onChangeInsurance: (evt) => dispatch(changeInsurance(evt.target.value)),
