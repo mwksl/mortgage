@@ -60,6 +60,16 @@ describe('<Calculator />', () => {
         .indexOf('Insurance: $35')
       ).toBeGreaterThan(-1);
   });
+  it('should not render insurance if none is passed', () => {
+    const renderedComponent = mount(
+      <Calculator taxes={20000} />
+    );
+    expect(
+      renderedComponent
+        .text()
+        .indexOf('Insurance: $35')
+      ).toEqual(-1);
+  });
 
   describe('mapDispatchToProps', () => {
     describe('onUpdateCalculator', () => {

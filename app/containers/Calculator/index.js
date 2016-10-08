@@ -47,6 +47,7 @@ export class Calculator extends React.Component { // eslint-disable-line react/p
     this.props.onUpdateCalculator(monthly, yearly, taxes, insurance);
   }
   render() {
+    let insuranceDisplay = null;
     let chart = (
       <VictoryPie
         data={[
@@ -79,6 +80,9 @@ export class Calculator extends React.Component { // eslint-disable-line react/p
           }}
         />
       );
+      insuranceDisplay = (
+        <p>Insurance: ${this.props.insuranceAmt}</p>
+      );
     }
     return (
       <div className={styles.calculator}>
@@ -93,7 +97,7 @@ export class Calculator extends React.Component { // eslint-disable-line react/p
               <Subheader>Your Monthly Breakdown</Subheader>
               <p>Principal/Interest: ${this.props.monthlyPrincipal}</p>
               <p>Taxes: ${this.props.taxes}</p>
-              <p>Insurance: ${this.props.insuranceAmt}</p>
+              {insuranceDisplay}
             </CardText>
           </Card>
         </MuiThemeProvider>
