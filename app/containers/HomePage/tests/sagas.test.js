@@ -25,7 +25,7 @@ describe('getRates Saga', () => {
   beforeEach(() => {
     getRatesGenerator = getRates();
 
-    const requestURL = `https://crossorigin.me/http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
+    const requestURL = `http://www.zillow.com/webservice/GetRateSummary.htm?zws-id=${ZWSID}&output=json`;
     const callDescriptor = getRatesGenerator.next().value;
     expect(callDescriptor).toEqual(call(request, requestURL));
   });
@@ -67,12 +67,12 @@ describe('getRates Saga', () => {
 
     let forkDescriptor;
 
-    it('should asynch fork the getRatesWatcher saga', () => {
+    it('should async fork the getRatesWatcher saga', () => {
       forkDescriptor = zillowDataSaga.next();
       expect(forkDescriptor.value).toEqual(fork(getRatesWatcher));
     });
 
-    it('should yiel until LOCATION_CHANGE action call', () => {
+    it('should yield until LOCATION_CHANGE action call', () => {
       const takeDescriptor = zillowDataSaga.next();
       expect(takeDescriptor.value).toEqual(take(LOCATION_CHANGE));
     });

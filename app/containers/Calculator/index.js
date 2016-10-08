@@ -96,7 +96,7 @@ Calculator.propTypes = {
   monthlyPrincipal: React.PropTypes.number,
 };
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     onUpdateCalculator: (monthly, yearly, taxes, insurance) => dispatch(updateCalculator(monthly, yearly, taxes, insurance)),
 

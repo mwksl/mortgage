@@ -58,7 +58,7 @@ function appReducer(state = initialState, action) {
         .set('loanPeriod', action.loanPeriod);
     case ADJUST_PROPERTY_VALUE:
       return state
-        .set('propertyValue', parseFloat(action.propertyValue.replace(/\$|,/g, '')));
+        .set('propertyValue', action.propertyValue);
     case ADJUST_DOWN_PAYMENT_VALUE:
       return state
         .set('downPayment', action.downPayment);

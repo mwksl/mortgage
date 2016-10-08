@@ -89,8 +89,8 @@ module.exports = (options) => ({
       '.react.js',
     ],
     mainFields: [
-      'jsnext:main',
       'main',
+      'jsnext:main',
     ],
   },
   devtool: options.devtool,

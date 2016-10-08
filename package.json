@@ -1,6 +1,6 @@
 {
   "name": "Northwestern-Mutual-Mortgage-Calc",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "React, Redux, and Express mortgage calculator",
   "repository": {
     "type": "git",

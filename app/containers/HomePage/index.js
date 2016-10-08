@@ -38,7 +38,11 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
 
 
   render() {
-    const rates = this.props.rates.today === undefined ? 3.25 : this.props.rates.today.fifteenYearFixed;
+    // Stub out for testing and errors
+    let rates = 3.25;
+    if (this.props.rates || this.props.rates.today) {
+      rates = this.props.rates.today.fifteenYearFixed;
+    }
     return (
       <article>
         <Helmet

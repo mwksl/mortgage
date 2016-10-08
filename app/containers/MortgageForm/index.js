@@ -112,8 +112,9 @@ MortgageForm.propTypes = {
 export function mapDispatchToProps(dispatch) {
   return {
     onChangePropertyValue: (evt, downPayment) => {
-      dispatch(changePropertyValue(evt.target.value));
-      dispatch(updatePrincipal(evt.target.value, downPayment));
+      const propertyValue = evt.target.value.replace(/[^0-9.-]+/g, '');
+      dispatch(changePropertyValue(propertyValue));
+      dispatch(updatePrincipal(propertyValue, downPayment));
     },
     onChangeLoanPeriod: (evt, value) => dispatch(changeLoanPeriodValue(value)),
     onChangeDownPayment: (evt, propertyValue) => {
@@ -134,15 +135,11 @@ export function mapDispatchToProps(dispatch) {
     },
     onChangeAPR: (evt) => dispatch(changeAPR(evt.target.value)),
     onChangeTax: (evt) => {
-      let taxRate = evt.target.value;
-      // If user enters a percentage sign
-      if (taxRate.match(/%$/) || taxRate < 100) {
-        const taxRateCleaned = taxRate.replace(/%$/, '');
-        taxRate = taxRateCleaned / 1200;
-      } else {
-        taxRate = parseFloat(taxRate.replace(/[^0-9.-]+/g, '') / 12);
-        console.log(taxRate);
+      let taxRate = evt.target.value.replace(/[^0-9.-]+/g, '') / 12;
+      if (taxRate < 100) {
+        taxRate /= 100;
       }
+
       dispatch(updateTaxRate(taxRate));
     },
     onChangeInsurance: (evt) => dispatch(changeInsurance(evt.target.value)),
